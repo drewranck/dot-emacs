@@ -47,14 +47,14 @@
   )
 
 (defun verilog-fix-module-header-indents ()
-  "For a region between module and ');' fix some indentation."
+  "For a region between module and ';' fix some indentation."
   (interactive)
   (let ((pt) (modstartpt) (modendpt))
     (setq pt (point))
     (beginning-of-buffer)
     (re-search-forward "^ *module " nil t)
     (setq modstartpt (point))
-    (re-search-forward ");" nil t)
+    (re-search-forward ";" nil t)
     (setq modendpt (point))
 
     ;; do indent 3 on module parameters
