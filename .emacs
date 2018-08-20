@@ -135,3 +135,5 @@
 (global-set-key (kbd "<f3>") 'kill-buffer)
 (global-set-key (kbd "C-c i") 'overwrite-mode)
 (global-set-key (kbd "C-c g") 'goto-line)
+(global-set-key (kbd "<f5>") 'query-replace)
+(global-set-key (kbd "<f6>") 'query-replace-regexp)
