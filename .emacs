@@ -14,6 +14,10 @@
 ;; dabbrev-expand, and indent.
 (global-smart-tab-mode 1)
 
+;; Make the window title be the current open buffer:
+(setq frame-title-format "%b")
+(setq icon-title-format "%b")
+
 ;; Make clipboard behavior sane
 (setq select-active-regions nil)
 (setq mouse-drag-copy-region t)
