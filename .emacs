@@ -176,38 +176,51 @@
     (when (string-match "-\\(?:dos\\|mac\\)$" coding-str)
       (set-buffer-file-coding-system 'unix))))
 	  
+;; get rid of Tabs, except makefiles
+(defun untabify-except-makefiles ()
+  "Replace tabs with spaces except in makefiles."
+  (unless (derived-mode-p 'makefile-mode)
+    (untabify (point-min) (point-max))))
+
 
 ;; Functions run on save:
 ;; always convert files to unix endlines:
 (add-hook 'before-save-hook 'no-junk-please-were-unixish)
 ;; always delete trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; delete tabs except Makefiles
+(add-hook 'before-save-hook 'untabify-except-makefiles)
 
 ;; in verilog-mode, fix the verilog-mode trailing comments
 (add-hook 'verilog-mode-hook
-	  #'(lambda ()
-	     (add-hook 'before-save-hook
-		       'verilog-fix-trailing-comments t)
-	     (add-hook 'before-save-hook
-		       'verilog-fix-module-header-indents t)
-	     (setq indent-tabs-mode nil)
-	     (setq tab-width 2))
-	  )
-	  
-(add-hook 'c++-mode-hook
-	  #'(lambda ()
-	     (setq indent-tabs-mode nil))
-	  )
+          #'(lambda ()
+              (add-hook 'before-save-hook
+                        'verilog-fix-trailing-comments t)
+              (add-hook 'before-save-hook
+                        'verilog-fix-module-header-indents t)
+              (setq indent-tabs-mode nil)
+          ))
 
 (add-hook 'tcl-mode-hook
-	  #'(lambda ()
-	     (setq indent-tabs-mode nil))
-	  )
+          #'(lambda ()
+             (setq indent-tabs-mode nil)
+          ))
 
 (add-hook 'sh-mode-hook
-	  #'(lambda ()
-	     (setq indent-tabs-mode nil))
-	  )	  
+          #'(lambda ()
+              (setq indent-tabs-mode nil)
+          ))
+
+
+(add-hook 'text-mode-hook
+          #'(lambda ()
+              (setq indent-tabs-mode nil)
+              ))
+
+(add-hook 'yaml-mode-hook
+          #'(lambda ()
+              (define-key yaml-mode-map "\C-m" 'newline-and-indent)
+              ))
 
 (global-set-key (kbd "<f1>") 'find-file)
 (global-set-key (kbd "<f3>") 'kill-buffer)
@@ -215,3 +228,4 @@
 (global-set-key (kbd "C-c g") 'goto-line)
 (global-set-key (kbd "<f5>") 'query-replace)
 (global-set-key (kbd "<f6>") 'query-replace-regexp)
+
