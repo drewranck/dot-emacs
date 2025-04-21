@@ -1,7 +1,9 @@
 (push "~/.emacs.d/smart-tab" load-path)
 (push "~/.emacs.d/color-theme" load-path)
+(push "~/.emacs.d/yaml-mode" load-path)
 (require 'smart-tab)
 (require 'color-theme)
+(require 'yaml-mode)
 
 
 ;; Set smart-tab, which does the "right thing" among hippie-expand,
@@ -68,8 +70,8 @@
 (add-to-list 'auto-mode-alist '("\\.sh\\'" . sh-mode))
 
 ;; .yaml
-(add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
 
 (custom-set-variables
