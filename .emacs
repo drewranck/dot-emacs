@@ -36,21 +36,21 @@
 ;; Tree sitter mode:
 (setq treesit-language-source-alist
    '(
-     (bash "https://github.com/tree-sitter/tree-sitter-bash")
-     (cmake "https://github.com/uyha/tree-sitter-cmake")
-     (css "https://github.com/tree-sitter/tree-sitter-css")
-     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-     (go "https://github.com/tree-sitter/tree-sitter-go")
-     (html "https://github.com/tree-sitter/tree-sitter-html")
+     (bash       "https://github.com/tree-sitter/tree-sitter-bash")
+     (cmake      "https://github.com/uyha/tree-sitter-cmake")
+     (css        "https://github.com/tree-sitter/tree-sitter-css")
+     (elisp      "https://github.com/Wilfred/tree-sitter-elisp")
+     (go         "https://github.com/tree-sitter/tree-sitter-go")
+     (html       "https://github.com/tree-sitter/tree-sitter-html")
      (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-     (json "https://github.com/tree-sitter/tree-sitter-json")
-     (make "https://github.com/alemuller/tree-sitter-make")
-     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-     (python "https://github.com/tree-sitter/tree-sitter-python")
-     (toml "https://github.com/tree-sitter/tree-sitter-toml")
-     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+     (json       "https://github.com/tree-sitter/tree-sitter-json")
+     (make       "https://github.com/alemuller/tree-sitter-make")
+     (markdown   "https://github.com/ikatyang/tree-sitter-markdown")
+     (python     "https://github.com/tree-sitter/tree-sitter-python")
+     (toml       "https://github.com/tree-sitter/tree-sitter-toml")
+     (tsx        "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-     (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+     (yaml       "https://github.com/ikatyang/tree-sitter-yaml")))
 
 ;; Add .do files to be in tcl-mode:
 (add-to-list 'auto-mode-alist '("\\.do\\'" . tcl-mode))
@@ -59,19 +59,19 @@
 (add-to-list 'auto-mode-alist '("Makefile\\." . makefile-mode))
 
 ;; Add .bzl, BUILD, WORKSPACE to python-mode (or python-ts-mode)
-(add-to-list 'auto-mode-alist '("BUILD\\'" . python-mode))
+(add-to-list 'auto-mode-alist '("BUILD\\'"     . python-mode))
 (add-to-list 'auto-mode-alist '("WORKSPACE\\'" . python-mode))
-(add-to-list 'auto-mode-alist '("\\.bzl\\'" . python-mode))
+(add-to-list 'auto-mode-alist '("\\.bzl\\'"    . python-mode))
 
 (add-to-list 'auto-mode-alist '("\\.emacs\\'" . lisp-mode))
 
 ;; .bash, sh, use bash-ts-mode or sh-mode
 (add-to-list 'auto-mode-alist '("\\.bash\\'" . bash-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.sh\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.sh\\'"   . sh-mode))
 
 ;; .yaml
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yml\\'"  . yaml-mode))
 
 
 (custom-set-variables
@@ -88,6 +88,7 @@
  '(custom-enabled-themes '(wombat))
  '(delete-key-deletes-forward t)
  '(tool-bar-mode nil)
+ '(display-fill-column-indicator-column 100)
  '(verilog-align-ifelse t)
  '(verilog-auto-delete-trailing-whitespace t)
  '(verilog-auto-inst-param-value t)
@@ -230,9 +231,22 @@
 (global-set-key (kbd "<f5>") 'query-replace)
 (global-set-key (kbd "<f6>") 'query-replace-regexp)
 
+;; I loathe the secondary selection b/c I'm a mouse user. Cut/Paste like a boss!
+(global-set-key [remap mouse-drag-secondary] 'mouse-drag-region)
+(global-set-key [remap mouse-set-secondary] 'mouse-set-region)
+(global-set-key [remap mouse-start-secondary] 'mouse-set-point)
+(global-set-key [remap mouse-yank-secondary] 'mouse-yank-primary)
+(global-set-key [remap mouse-secondary-save-then-kill] 'mouse-save-then-kill)
+(global-unset-key (kbd "<M-drag-mouse-1>"))   ; was mouse-set-secondary
+(global-unset-key (kbd "<M-down-mouse-1>"))   ; was mouse-drag-secondary
+(global-unset-key (kbd "<M-mouse-1>"))	  ; was mouse-start-secondary
+(global-unset-key (kbd "<M-mouse-2>"))	  ; was mouse-yank-secondary
+(global-unset-key (kbd "<M-mouse-3>"))	  ; was mouse-secondary-save-then-kill
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight regular :height 128 :width normal)))))
+
