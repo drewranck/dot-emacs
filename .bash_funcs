@@ -1,0 +1,67 @@
+function path_remove() {
+    dir_to_remove=$1
+    PATH=:$PATH:
+    while [[ $PATH = *":$dir_to_remove:"* ]]; do
+        PATH=${PATH//":$dir_to_remove:"/:}
+    done
+    # Trim off ":" from the beginning and end.
+    PATH=${PATH#:}
+    PATH=${PATH%:}
+}
+
+function path_add() {
+    path_to_add=$1
+    PATH=$PATH:$path_to_add
+    # Trim off ":" from the beginning and end.
+    PATH=${PATH#:}
+    PATH=${PATH%:}
+}
+
+
+
+#
+# Vivado - assuming installed in $HOME/tools/
+#   - user to modify to their liking, such as /tools/Xilinx
+#
+export XILINX_BASE_PATH=$HOME/tools/Xilinx
+
+function remove_vivado() {
+    path_to_remove=`which vivado | sed 's/\/vivado *$//'`
+    path_remove $path_to_remove
+}
+
+function set_vivado() {
+    echo "-- Current --"
+    which vivado
+    env | grep XILINX_VIVADO
+    ver=$1
+    # 2024 and earlier follow this pattern:
+    p1=$XILINX_BASE_PATH/Vivado/$ver/bin
+    # 2025.1 and newer follows this pattern:
+    p2=$XILINX_BASE_PATH/$ver/Vivado/bin
+    if [[ -e $p1 ]];
+    then
+        remove_vivado
+        XILINX_VIVADO=$XILINX_BASE_PATH/Vivado/$ver
+        path_add $XILINX_VIVADO/bin
+        echo "-- New --"
+        which vivado
+        env | grep XILINX_VIVADO
+    elif [[ -e $p2 ]];
+    then
+        remove_vivado
+        XILINX_VIVADO=$XILINX_BASE_PATH/$ver/Vivado
+        path_add $XILINX_VIVADO/bin
+        echo "-- New --"
+        which vivado
+        env | grep XILINX_VIVADO
+    else
+        echo "Version $ver path doesn't exist: $p1 or $p2"
+    fi
+
+}
+
+function get_vivado_versions() {
+    dirs=`ls -1 $XILINX_BASE_PATH/Vivado/ $XILINX_BASE_PATH/ | egrep "^20"`
+    echo $dirs
+}
