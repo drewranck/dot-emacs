@@ -10,8 +10,17 @@
 ;; dabbrev-expand, and indent.
 (global-smart-tab-mode 1)
 
+
+
 ;; Make clipboard behavior sane
-(setq select-active-regions nil)
+;; Put selection into the clipboard immediately
+(setq select-active-regions t)
+;; Ensure selecting text overwrites the "primary" selection (Middle Click)
+(setq select-enable-primary t)
+;; (Optional) uncomment if older kill-ring history vs system clipbloard are out
+;; of sync and C-y (yank) or paste is pasting older entries:
+;;(setq save-interprogram-paste-before-kill nil)
+;; Mouse paste:
 (setq mouse-drag-copy-region t)
 (global-set-key [mouse-2] 'mouse-yank-at-click)
 
@@ -230,6 +239,15 @@
 (global-set-key (kbd "C-c g") 'goto-line)
 (global-set-key (kbd "<f5>") 'query-replace)
 (global-set-key (kbd "<f6>") 'query-replace-regexp)
+
+;; Fix Macos trash behavior of Home/End keys (start/end of document, really?
+;; is it still 1984?)
+;; Standard line-based movement for Home/End keys
+(global-set-key (kbd "<home>") 'move-beginning-of-line)
+(global-set-key (kbd "<end>") 'move-end-of-line)
+;; Optional: Fix Shift+Home/End for selection
+(global-set-key (kbd "S-<home>") (lambda () (interactive) (beginning-of-line-text)))
+(global-set-key (kbd "S-<end>") (lambda () (interactive) (move-end-of-line nil)))
 
 ;; I loathe the secondary selection b/c I'm a mouse user. Cut/Paste like a boss!
 (global-set-key [remap mouse-drag-secondary] 'mouse-drag-region)
