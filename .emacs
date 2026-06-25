@@ -10,8 +10,6 @@
 ;; dabbrev-expand, and indent.
 (global-smart-tab-mode 1)
 
-
-
 ;; Make clipboard behavior sane
 ;; Put selection into the clipboard immediately
 (setq select-active-regions t)
@@ -36,8 +34,17 @@
 
 
 ;; Make window larger
-(add-to-list 'default-frame-alist '(height . 25))
-(add-to-list 'default-frame-alist '(width . 100))
+(add-to-list 'default-frame-alist '(height . 35))
+(add-to-list 'default-frame-alist '(width . 120))
+;; And fix new frames.
+;(add-hook 'after-make-frame-functions
+;  (lambda (frame)
+;    (modify-frame-parameters frame '((width . 120) (height . 35)))))
+;(add-hook 'after-init-hook
+;  (lambda ()
+;    (set-frame-height (selected-frame) 35)
+;    (set-frame-width (selected-frame) 120)))
+
 
 ;; Adjust the Buffers menu size
 (setq buffers-menu-max-size nil)
@@ -81,6 +88,9 @@
 ;; .yaml
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yml\\'"  . yaml-mode))
+
+;; Add .tcss files to be in css-mode:
+(add-to-list 'auto-mode-alist '("\\.tcss\\'" . css-mode))
 
 
 (custom-set-variables
@@ -249,6 +259,7 @@
 (global-set-key (kbd "S-<home>") (lambda () (interactive) (beginning-of-line-text)))
 (global-set-key (kbd "S-<end>") (lambda () (interactive) (move-end-of-line nil)))
 
+
 ;; I loathe the secondary selection b/c I'm a mouse user. Cut/Paste like a boss!
 (global-set-key [remap mouse-drag-secondary] 'mouse-drag-region)
 (global-set-key [remap mouse-set-secondary] 'mouse-set-region)
@@ -261,10 +272,12 @@
 (global-unset-key (kbd "<M-mouse-2>"))	  ; was mouse-yank-secondary
 (global-unset-key (kbd "<M-mouse-3>"))	  ; was mouse-secondary-save-then-kill
 
-(custom-set-faces
+(define-key key-translation-map (kbd "S-<return>") (kbd "RET"))
+(define-key key-translation-map (kbd "C-j") (kbd "RET"))
+
+;;(custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight regular :height 128 :width normal)))))
-
+;; '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight regular :height 128 :width normal)))))
